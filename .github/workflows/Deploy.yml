@@ -2,8 +2,9 @@ name: "Deploy x86"
 
 on:
   push:
-    tags:
-     - "Base64/v*"
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 env:
   PROJECT_PATH: Base64.csproj
@@ -22,7 +23,7 @@ jobs:
 
       - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
 
-      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -r win-x86 -p:PublishSingleFile=true --no-build
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release -p:PublishSingleFile=true --no-build
 
       - uses: actions/create-release@v1
         id: create_release
