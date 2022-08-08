@@ -85,23 +85,6 @@ namespace Base64
                 outText = Convert.ToBase64String(inBytes);
                 OutBox.Text = outText;
             }
-
-            /* In case if something BROKEN
-            if (b64mode == true)
-            {
-                // Base64 Encoding
-                byte[]? inBytes = Encoding.UTF8.GetBytes(inText);
-                outText = Convert.ToBase64String(inBytes);
-                OutBox.Text = outText;
-            }
-
-            else
-            {
-                byte[]? inBytes = Convert.FromBase64String(inText);
-                outText = Encoding.UTF8.GetString(inBytes);
-                OutBox.Text = outText;
-            }
-            */
         }
     }
 }
