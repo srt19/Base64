@@ -2,8 +2,9 @@ name: "Deploy x86"
 
 on:
   push:
-    tags:
-     - "Base64/v*"
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 env:
   PROJECT_PATH: Base64.csproj
