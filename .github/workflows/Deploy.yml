@@ -24,12 +24,11 @@ jobs:
       
       - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --no-build
       
+      - uses: edgarrc/action-7z@v1
+        with:
+          args: 7z a -t7z -mx=9 Base64.v*.7z bin/Release/net6.0-windows/win-x86/publish/*
+      
       - uses: actions/upload-artifact@v3
         with:
-          name: Artifact
-          path: bin/Release/net6.0-windows/win-x86/publish
-      - uses: elgohr/Github-Release-Action@v4
-        env:
-          GITHUB_TOKEN : ${{ secrets.RELEASE_TOKEN }}
-        with:
-          title: Base64.v*
+          name: Base64.v*
+          path: bin/Release/net6.0-windows/win-x86/publish/*.7z
