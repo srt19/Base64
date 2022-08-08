@@ -25,7 +25,7 @@ jobs:
       
       - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release
       
-      - uses: actions/uploads-artifact@v3
+      - uses: actions/upload-artifact@v3
         with:
           name: Artifact
           path: bin/Release/net6.0-windows/
