@@ -1,10 +1,9 @@
-name: "Deploy x86"
+name: Publish X86 Release
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    tags:
+      - "Base64.v*"
 
 env:
   PROJECT_PATH: Base64.csproj
@@ -13,9 +12,9 @@ jobs:
   deploy:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      - uses: actions/setup-dotnet@v1
+      - uses: actions/setup-dotnet@v2
         with:
           dotnet-version: 6.0.x
 
@@ -23,9 +22,15 @@ jobs:
 
       - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
       
-      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --no-build
       
       - uses: actions/upload-artifact@v3
         with:
           name: Artifact
           path: bin/Release/net6.0-windows/win-x86/publish
+      - uses: elgohr/Github-Release-Action@v4
+        env:
+          GITHUB_TOKEN : ${{ secrets.RELEASE_TOKEN }}
+        with:
+          path: bin/Release/net6.0-windows/win-x86/publish
+          title: Base64.v*
