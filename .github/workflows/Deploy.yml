@@ -27,7 +27,7 @@ jobs:
       - name: Compress 7z
         run: |
           cd bin/Release/net6.0-windows/win-x86/publish
-          7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on Base64.v*.7z *
+          7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on Base64.Release.7z *
       
       - uses: actions/upload-artifact@v3
         with:
