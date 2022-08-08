@@ -22,17 +22,10 @@ jobs:
       - run: dotnet restore ${{ env.PROJECT_PATH }}
 
       - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
-
-      - uses: actions/create-release@v1
-        id: create_release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release
+      
+      - uses: actions/uploads-artifact@v3
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
-
-      - uses: csexton/release-asset-action@v2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          pattern: bin/Release/net6.0-windows/*
-          release-url: ${{ steps.create_release.outputs.upload_url }}
+          name: Artifact
+          path: bin/Release/net6.0-windows/
