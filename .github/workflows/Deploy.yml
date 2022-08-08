@@ -28,4 +28,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: Artifact
-          path: bin/Release/net6.0-windows/
+          path: bin/Release/net6.0-windows/publish
