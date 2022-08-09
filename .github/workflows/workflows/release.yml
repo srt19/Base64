@@ -12,6 +12,10 @@ jobs:
   deploy:
     name: Publish and Upload
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+        
     steps:
       - uses: actions/checkout@v3
 
@@ -25,10 +29,15 @@ jobs:
       
       - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --no-build
       
+      - name: Get version
+        id: get_version
+        shell: bash
+        run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
+      
       - name: Compress 7z
         run: |
           cd bin/Release/net6.0-windows/win-x86/publish
-          7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on Base64.${{ github.ref }}.7z *
+          7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on Base64.${{ steps.get_version.outputs.VERSION }}.7z *
       
       - uses: actions/upload-artifact@v3
         with:
