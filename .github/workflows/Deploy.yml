@@ -1,4 +1,4 @@
-name: Publish Windows X86 Release
+name: Deploy Windows x86
 
 on:
   push:
