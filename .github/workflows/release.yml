@@ -23,7 +23,7 @@ jobs:
 
       - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
       
-      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --no-build --self-contained false
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --no-build
       
       - name: Compress 7z
         run: |
