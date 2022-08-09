@@ -10,6 +10,7 @@ env:
 
 jobs:
   deploy:
+    name: Publish and Upload
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,12 +23,12 @@ jobs:
 
       - run: dotnet build ${{ env.PROJECT_PATH }} -c Release --no-restore
       
-      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --no-build
+      - run: dotnet publish ${{ env.PROJECT_PATH }} -c Release --no-build --self-contained false
       
       - name: Compress 7z
         run: |
           cd bin/Release/net6.0-windows/win-x86/publish
-          7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on Base64.Release.7z *
+          7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on Base64.${{ github.ref }}.7z *
       
       - uses: actions/upload-artifact@v3
         with:
