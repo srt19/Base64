@@ -36,18 +36,18 @@ jobs:
       
       - name: Compress 7z
         run: |
-          cd bin/Release/net6.0-windows/publish/win-x86
+          cd bin/Release/net6.0-windows/win-x86/publish
           7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=64m -ms=on Base64.${{ steps.get_version.outputs.VERSION }}.7z *
       
       - uses: actions/upload-artifact@v3
         with:
           name: Base64
-          path: bin/Release/net6.0-windows/publish/win-x86/*.7z
+          path: bin/Release/net6.0-windows/win-x86/publish/*.7z
       - name: Upload Release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: bin/Release/net6.0-windows/publish/win-x86/*.7z
+          file: bin/Release/net6.0-windows/win-x86/publish/*.7z
           tag: ${{ github.ref }}
           file_glob: true
           prerelease: true
