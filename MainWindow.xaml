@@ -6,20 +6,26 @@
         xmlns:local="clr-namespace:Base64"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
-        Title="Base64 Encoder / Decoder" Height="420" Width="620" MinWidth="620" MinHeight="420">
-    <StackPanel MinHeight="400" MinWidth="600">
+        Title="Base64 Encoder / Decoder" Height="480" Width="620" MinWidth="620" MinHeight="420">
+    <StackPanel MinHeight="400" MinWidth="600" VerticalAlignment="Stretch">
         <StackPanel Margin="5" HorizontalAlignment="Center" Orientation="Horizontal">
             <RadioButton Margin="5" IsChecked="True" Click="EncRadio">Encode</RadioButton>
             <RadioButton Margin="5" Click="DecRadio">Decode</RadioButton>
             <CheckBox Margin="5" Name="URLCek" IsEnabled="False">Is URL?</CheckBox>
         </StackPanel>
-        <TextBox Margin="10,5,10,5" Name="InBox" MinWidth="550" MinHeight="150" Text="Input" UseLayoutRounding="False" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" AutomationProperties.IsRequiredForForm="True" AutoWordSelection="True">
+        <TextBox Margin="10,5,10,5" Name="InBox" MinWidth="550" MinHeight="150" Text="Input"
+                 HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap">
         </TextBox>
-        <Button Margin="5" Name="ConvertButton" MinWidth="45" MinHeight="18" Click="ConvertRun" UseLayoutRounding="False">
+        <Button Margin="5" Name="ConvertButton" MinWidth="45" MinHeight="18" Click="ConvertRun">
             <Button.HorizontalAlignment>Center</Button.HorizontalAlignment>
             <Button.Content>Convert</Button.Content>
         </Button>
-        <TextBox Margin="10, 5, 10, 5" Name="OutBox" MinWidth="550" MinHeight="150" Text="Output" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap" AutoWordSelection="True">
+        <TextBox Margin="10, 5, 10, 5" Name="OutBox" MinWidth="550" MinHeight="150"
+                 Text="Output" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" TextWrapping="Wrap">
         </TextBox>
+      <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
+        <CheckBox Name="FileCek" Margin="5, 5, 10, 5" Click="File_Tick">Write To txt</CheckBox>
+        <Button Name="SelFile" Margin="5" Click="SelFile_Clicked" IsEnabled="False">Select File</Button>
+      </StackPanel>
     </StackPanel>
 </Window>

@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Base64
 {
@@ -20,7 +10,8 @@ namespace Base64
     /// </summary>
     public partial class MainWindow : Window
     {
-        public bool b64mode = false;
+        private bool b64mode = false;
+        private String outFile = null!;
         public MainWindow()
         {
             InitializeComponent();
@@ -40,7 +31,7 @@ namespace Base64
         private void ConvertRun(object sender, RoutedEventArgs e)
         {
             string inText = InBox.Text;
-            string outText;
+            string outText = "0";
 
             if (b64mode == true && URLCek.IsChecked == true)
             {
@@ -85,6 +76,72 @@ namespace Base64
                 outText = Convert.ToBase64String(inBytes);
                 OutBox.Text = outText;
             }
+
+            if (FileCek.IsChecked == true)
+                WriteTXT(outText, inText);
+            else
+                return;
+        }
+
+        private void WriteTXT(string outText, string inText)
+        {
+            try
+            {
+                if (outFile.EndsWith("txt"))
+                {
+                    StreamWriter file = File.AppendText(outFile);
+                    file.WriteLine(outText);
+                }
+
+                else
+                {
+                    if (File.Exists(outFile) != true)
+                    {
+                        var headings = string.Format("{0};{1}", "Input", "Output" + Environment.NewLine);
+                        var outs = string.Format("{0};{1}", inText, outText + Environment.NewLine);
+                        File.WriteAllText(outFile, headings);
+                        File.AppendAllText(outFile, outs);
+                    }
+
+                    else
+                    {
+                        var outs = string.Format("{0};{1}", inText, outText + Environment.NewLine);
+                        File.AppendAllText(outFile, outs);
+                    }
+                }
+            }
+
+            catch(System.IO.IOException)
+            {
+                MessageBox.Show("File being used in another program", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void File_Tick(object sender, RoutedEventArgs e)
+        {
+            if (SelFile.IsEnabled == false)
+                SelFile.IsEnabled = true;
+            else
+                return;
+        }
+
+        private void SelFile_Clicked(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.SaveFileDialog saveFile = new()
+            {
+                Title = "Save txt file",
+                DefaultExt = "txt",
+                Filter = "Text Files (*.txt)|*.txt|CSV Files (*.csv)|*.csv"
+            };
+
+            Nullable<bool> result = saveFile.ShowDialog();
+
+            if (result == true)
+            {
+                outFile = saveFile.FileName;
+            }
+            else
+                return;
         }
     }
 }
